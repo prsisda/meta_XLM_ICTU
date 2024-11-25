@@ -14,7 +14,8 @@ PARA_PATH=/content/data/para
 mkdir -p $PARA_PATH
 
 # opus data source (MultiUN or OpenSubtitles2018 or MultiUN,OpenSubtitles2018) : customize as needed
-SRC=OpenSubtitles2018,MultiUN
+# SRC=OpenSubtitles2018,MultiUN
+SRC=OpenSubtitles,MultiUN
 
 if [ ! -d $PARA_PATH/${pair} ]; then
     mkdir $PARA_PATH/${pair}
