@@ -16,6 +16,7 @@ mkdir -p $PARA_PATH
 # opus data source (MultiUN or OpenSubtitles2018 or MultiUN,OpenSubtitles2018) : customize as needed
 SRC=OpenSubtitles2018,MultiUN
 
+
 if [ ! -d $PARA_PATH/${pair} ]; then
     mkdir $PARA_PATH/${pair}
 else
@@ -25,12 +26,10 @@ fi
 echo -e "\n"
 echo "***Download data and unzip it in $PARA_PATH/$pair ***"
 
-# Updated function to download and unzip data
+# Take 2 parameters : PARA_PATH source 
 download_and_unzip_data() {
-    base_url="https://object.pouta.csc.fi/OPUS-$2/v2018/moses"
-    file_name="${pair}.txt.zip"
-    wget -c ${base_url}/${file_name} -P $1/${pair}
-    unzip -u $1/${pair}/${file_name} -d $1/${pair}
+    wget -c http://opus.nlpl.eu/download.php?f=$2%2F${pair}.txt.zip -P $1/${pair}
+    unzip -u $1/${pair}/download.php?f=$2%2F${pair}.txt.zip -d $1/${pair}
 }
 
 if [ $SRC = "MultiUN,OpenSubtitles2018" ] || [ $SRC = "OpenSubtitles2018,MultiUN" ]; then
@@ -42,8 +41,8 @@ if [ $SRC = "MultiUN,OpenSubtitles2018" ] || [ $SRC = "OpenSubtitles2018,MultiUN
   else
     # es-it...
     for src in OpenSubtitles GlobalVoices EUbookshop; do
-      wget -c "https://object.pouta.csc.fi/OPUS-${src}/v2018/moses/es-it.txt.zip" -P $PARA_PATH/${pair}
-      unzip -u $PARA_PATH/${pair}/es-it.txt.zip -d $PARA_PATH/${pair}
+      wget -c http://opus.nlpl.eu/download.php?f=${src}%2Fes-it.txt.zip -P $PARA_PATH/${pair}
+      unzip -u $PARA_PATH/${pair}/download.php?f=${src}%2Fes-it.txt.zip -d $PARA_PATH/${pair}
     done
   fi
 elif [ $SRC = "MultiUN" ] || [ $SRC = "OpenSubtitles2018" ]; then
@@ -52,8 +51,8 @@ elif [ $SRC = "MultiUN" ] || [ $SRC = "OpenSubtitles2018" ]; then
     download_and_unzip_data $PARA_PATH $SRC 
   else
     # es-it...
-    wget -c "https://object.pouta.csc.fi/OPUS-OpenSubtitles/v2018/moses/es-it.txt.zip" -P $PARA_PATH/${pair}
-    unzip -u $PARA_PATH/${pair}/es-it.txt.zip -d $PARA_PATH/${pair}
+    wget -c http://opus.nlpl.eu/download.php?f=OpenSubtitles2018%2Fes-it.txt.zip -P $PARA_PATH/${pair}
+    unzip -u $PARA_PATH/${pair}/download.php?f=OpenSubtitles2018%2Fes-it.txt.zip -d $PARA_PATH/${pair}
   fi
 else
   echo "source error : $SRC is not valid source, choose between MultiUN and OpenSubtitles2018"
@@ -69,3 +68,4 @@ for lg in $(echo $pair | sed -e 's/\-/ /g'); do
         echo "file $PARA_PATH/${pair}/$pair.$lg.txt already exists"
     fi
 done
+
