@@ -34,7 +34,7 @@ download_and_unzip_data() {
     unzip -u $1/${pair}/${file_name} -d $1/${pair}
 }
 
-if [ $SRC = "MultiUN,OpenSubtitles2018" ] || [ $SRC = "OpenSubtitles2018,MultiUN" ]; then
+if [ $SRC = "MultiUN,OpenSubtitles" ] || [ $SRC = "OpenSubtitles,MultiUN" ]; then
   if [ $pair != "es-it" ]; then
     # es-fr, de-en, fr-ru, en-ru, de-fr...
     for src in $(echo $SRC | sed -e 's/\,/ /g'); do
